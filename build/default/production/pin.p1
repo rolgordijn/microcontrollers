@@ -1,0 +1,51 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"19 ./pin.h
+[; ;./pin.h: 19:     typedef struct {
+[s S1 `a 1 `a 1 `us 1 `a 1 `a 1 `uc 1 ]
+[n S1 . rising_edge falling_edge status isHigh isLow cnt ]
+"33 pin.c
+[; ;pin.c: 33: void processPin(debouncedPin* p, _Bool current) {
+[v _processPin `(v ~T0 @X0 1 ef2`*S1`a ]
+{
+[e :U _processPin ]
+[v _p `*S1 ~T0 @X0 1 r1 ]
+[v _current `a ~T0 @X0 1 r2 ]
+[f ]
+"34
+[; ;pin.c: 34:     p->status = p->status * 2;
+[e = . *U _p 2 -> * -> . *U _p 2 `ui -> -> 2 `i `ui `us ]
+"35
+[; ;pin.c: 35:     if(current) p->status +=1;
+[e $ ! != -> _current `i -> 0 `i 3  ]
+[e =+ . *U _p 2 -> -> 1 `i `us ]
+[e :U 3 ]
+"37
+[; ;pin.c: 37:     p->falling_edge = (p->isHigh && p->status!=0xFFFF);
+[e = . *U _p 1 -> -> && != -> . *U _p 3 `i -> 0 `i != -> . *U _p 2 `ui -> 65535 `ui `i `a ]
+"38
+[; ;pin.c: 38:     p->rising_edge = (p->isLow && p->status == 0XFFFF);
+[e = . *U _p 0 -> -> && != -> . *U _p 4 `i -> 0 `i == -> . *U _p 2 `ui -> 65535 `ui `i `a ]
+"40
+[; ;pin.c: 40:     p->isHigh = p->status == 0XFFFF;
+[e = . *U _p 3 -> -> == -> . *U _p 2 `ui -> 65535 `ui `i `a ]
+"41
+[; ;pin.c: 41:     p->isLow = !p->isHigh;
+[e = . *U _p 4 -> -> ! != -> . *U _p 3 `i -> 0 `i `i `a ]
+"42
+[; ;pin.c: 42: }
+[e :UE 2 ]
+}
+"44
+[; ;pin.c: 44: void initPin(debouncedPin * p){
+[v _initPin `(v ~T0 @X0 1 ef1`*S1 ]
+{
+[e :U _initPin ]
+[v _p `*S1 ~T0 @X0 1 r1 ]
+[f ]
+"45
+[; ;pin.c: 45:     p->status = 0xFFFF;
+[e = . *U _p 2 -> -> 65535 `ui `us ]
+"46
+[; ;pin.c: 46: }
+[e :UE 4 ]
+}
